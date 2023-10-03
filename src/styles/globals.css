@@ -75,14 +75,14 @@
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+
 }
 
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  padding: 8px 15px;
 }
 
 body {
@@ -98,6 +98,34 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+li {
+  list-style: none;
+}
+.inFlex{
+  display: inline-flex;
+}
+.flexCol{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.txtCenter {
+  text-align: center
+}
+.link{
+  margin-top: 20px;
+  text-align: center;
+  border: 2px solid red;
+  border-radius: 20px;
+  padding: 8px 15px;
+}
+
+.link:hover {
+    background-color:red;
+    border: 2px solid white;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
 }
 
 @media (prefers-color-scheme: dark) {
