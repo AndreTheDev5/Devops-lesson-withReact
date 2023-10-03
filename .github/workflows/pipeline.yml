@@ -40,7 +40,21 @@ jobs:
               run: npm run build
 
             - name: Artifacts
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-pages-artifact@v2
               with:
-                name: build
                 path: ./out
+    # Deployment job
+    deploy: 
+        runs-on: ubuntu-latest
+        needs: build #Waiting for build to complete
+        # Environment corrisponde al insieme di risultati (output) a cui porta lo sviluppo e la build della pipeline
+        environment:
+            name: github-pages #nome dell'artefatto generato nella descrizione di "build"
+            url: ${{ steps.deployment.outputs.page_url }}
+        steps:
+            - name: Deploy to GitHub Action / Pages
+              id: deployment
+              uses: actions/deploy-pages@v2
+
+    # Assegnare un id allo step di deploy che definisce la condizione di host è utile per poterlo richiamare nell'enviroment e utilizzare il metodo 
+    # OUTPUT del pacchetto deploy-pages di GH actions al fine di ottenere l'URL del sito 
