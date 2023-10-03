@@ -1,0 +1,40 @@
+# Per costruire una pipeline su GitHub Actions si deve inzializzare tramite NOME e TRIGGER
+# GitHub Actions / Pages permette di fare hosting solo di siti statici 
+# Si dovrà configurare NEXT per la staticità dell'app creata :=> altrimenti usa !VERCELS! 
+
+name: "Deploy Next.js site to Pages"
+
+#Trigger = quando e dove svolgere le azioni definite tramite step che gli indico 
+on: 
+    push:
+        branches:
+            - main
+
+#Imposta i permessi of the GITHUB_TOKEN per il deployment di GITHUB ACTIONS SU GITHUB PAGES
+# Cambiando i permessi dai settings su GitHub nella sezione "Actions" --> "general" --> "Workspace" dicendo che può "scrivere"
+# Gli stimo passando i permessi effettivi sul cosa può fare 
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+jobs: 
+    build: 
+        runs-on: 
+            - ubuntu-latest
+            - windows-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3     # Si stanno utilizzando i pacchetti di GitHub Actions. Altri strumenti hanno i loro pacchetti (es: Jankins)
+              with:
+                node-version: 18
+
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build
+              run: npm run build
